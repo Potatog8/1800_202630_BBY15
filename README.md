@@ -66,7 +66,7 @@ elmo-hikes/
 
 
 ## Contributors
-- **Matthew** - BCIT CST Student with a passion for video games.
+- **Matthew** - BCIT CST Student with a love for video games.
 - **Teammate Name** - BCIT CST Student, Frontend enthusiast with a knack for creative design. Fun fact: Has a collection of over 50 houseplants.
 
 ---
