@@ -67,6 +67,7 @@ elmo-hikes/
 
 ## Contributors
 - **Harsh** - BCIT CST Student with a passion for gaming. Fun fact: Loves all things Pokemon.
+- **Matthew** - BCIT CST Student with a love for video games.
 
 ---
 
