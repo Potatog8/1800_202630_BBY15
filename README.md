@@ -67,8 +67,8 @@ elmo-hikes/
 
 ## Contributors
 - **rehaan** - BCIT CST Student with a passion for learning how to code. Fun fact: Loves dogs
-
-
+- **Harsh** - BCIT CST Student with a passion for gaming. Fun fact: Loves all things Pokemon.
+- **Matthew** - BCIT CST Student with a love for video games.
 ---
 
 
