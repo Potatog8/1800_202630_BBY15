@@ -2,10 +2,10 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDOA8LLXOecfkFI2Yt3e9Lcc7gmFQAn7nQ",
-  authDomain: "bby15-heirloom-recipes.firebaseapp.com",
-  projectId: "bby15-heirloom-recipes",
-  appId: "1:57790335264:web:61c261214c0d913e8baf45"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
 };
 
 const app = initializeApp(firebaseConfig);
