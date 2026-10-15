@@ -1,42 +1,29 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>My BCIT Project</title>
+    <title>Heirloom Recipes</title>
     <meta name="comp1800 template" content="My 1800 App" />
 
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="styles/style.css" />
 
     <!-- Other libraries go here -->
   </head>
 
   <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-bottom">
-      <div class="container-fluid">
-        <ul class="navbar-nav flex-row w-100 justify-content-around">
-          <li class="nav-item">
-            <a class="nav-link" href="#">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Favorites</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Collections</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Profile</a>
-          </li>
-        </ul>
-      </div>
-    </nav>
+    <div id="site-header"></div>
+
+    <!--Hero-->
     <div class="p-5 mb-4 bg-light rounded-3">
       <div class="container-fluid py-5">
         <h1 class="display-5 fw-bold">Welcome to Heirloom Recipes!</h1>
-
         <p class="col-md-8 fs-4">Start cooking memories now.</p>
       </div>
     </div>
+
+    <!--Login Button-->
     <section class="container mb-5">
       <div class="card text-center text-bg-primary shadow-sm">
         <div class="card-body p-5">
@@ -44,16 +31,18 @@
           <p class="card-text mb-4">
             Log in to see your saved recipes and collections.
           </p>
-          <a href="login.html" class="btn btn-light btn-lg me-2">Log In</a>
-          <a href="signup.html" class="btn btn-outline-light btn-lg">Sign Up</a>
+          <a href="loginSignup.html#login" class="btn btn-light btn-lg me-2"
+            >Log In</a
+          >
+          <a href="loginSignup.html#signup" class="btn btn-outline-light btn-lg"
+            >Sign Up</a
+          >
         </div>
       </div>
     </section>
-    <!---------------------------------------------->
-    <!-- Your own JavaScript functions go here    -->
-    <!---------------------------------------------->
 
-    <!-- Link to scripts of your own -->
+    <div id="site-nav"></div>
+
     <script type="module" src="./src/main.js"></script>
   </body>
 </html>
