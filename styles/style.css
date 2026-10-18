@@ -8,3 +8,27 @@
   font-size: 2rem;
   border-width: 2px;
 }
+
+.save-btn {
+  display: inline-block;
+  width: 200px;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  background: #d9d9d9;
+  color: #000;
+  border: 1px solid #d9d9d9;
+  border-radius: 0;
+  cursor: pointer;
+}
+
+.save-btn:hover,
+.save-btn:focus-visible {
+  background: #000;
+  color: #fff;
+  border-color: #000;
+}
+
+textarea {
+  field-sizing: content;
+  min-height: 6rem;
+}
