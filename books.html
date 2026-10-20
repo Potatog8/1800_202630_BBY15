@@ -1,0 +1,65 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Explore Recipes | Heirloom Recipes</title>
+
+    <!-- Bootstrap CSS -->
+
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+
+<body>
+
+    <div id="site-header"></div>
+
+    <main class="container mt-5 pb-5 mb-5">
+
+        <!-- Page Heading -->
+        <section class="mb-4">
+            <h1 class="fw-bold">Explore Recipes</h1>
+
+            <p class="text-secondary">
+                Discover recipes and family favourites.
+            </p>
+        </section>
+
+        <!-- Recipe Results -->
+        
+<section>
+    <h2 class="mb-4">Recipes</h2>
+
+    <div class="row g-4" id="recipeResults">
+        <!-- Recipes will appear here when added -->
+    </div>
+
+    <!-- Empty State -->
+    <div id="noResults" class="text-center py-5">
+        <h4>No recipes yet!</h4>
+        <p class="text-secondary">
+            Start preserving your family's favourite recipes.
+        </p>
+
+        <a href="create_recipe.html" class="btn btn-warning">
+            Add Your First Recipe
+        </a>
+    </div>
+</section>
+
+
+    </main>
+
+    <div id="site-nav"></div>
+
+    <!-- Bootstrap JavaScript -->
+
+    <!-- Recipe Results JavaScript -->
+    <script type="module" src="/src/main.js"></script>
+</body>
+</html>
