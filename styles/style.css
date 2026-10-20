@@ -32,3 +32,28 @@ textarea {
   field-sizing: content;
   min-height: 6rem;
 }
+
+.welcome-section {
+    background-color: #fff1e3;
+    color: #713a15;
+}
+
+.welcome-section p {
+    color: #8c552e;
+}
+
+.card {
+    border-radius: 12px;
+}
+
+.btn-warning {
+    background-color: #f97316;
+    border-color: #f97316;
+    color: white;
+}
+
+.btn-warning:hover {
+    background-color: #ea580c;
+    border-color: #ea580c;
+    color: white;
+}

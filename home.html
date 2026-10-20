@@ -10,10 +10,124 @@
 <body>
   <div id="site-header"></div>
 
-  <!-- page content -->
+  
+<main class="container mt-5 mb-5 pb-5">
+
+    
+<!-- Slogan Section -->
+<section class="welcome-section p-4 rounded-3 mb-5">
+
+    <h1 class="fw-bold">Every recipe tells a story. What will you cook today?</h1>
+
+</section>
+
+
+    <!-- Family Kitchen Section -->
+    <section class="mb-5">
+
+        <h2 class="mb-4">Your Family Kitchen</h2>
+
+        <div class="row g-4">
+
+            <!-- Family Collection -->
+            <div class="col-md-6">
+                <div class="card h-100">
+                    <div class="card-body p-4">
+
+                        <h3 class="card-title">
+                            Family Collection
+                        </h3>
+
+                        <p class="card-text">
+                            Explore recipes shared by your family.
+                        </p>
+
+                        <a href="books.html"
+                           class="btn btn-warning">
+                            View Recipes
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add Recipe -->
+            <div class="col-md-6">
+                <div class="card h-100">
+                    <div class="card-body p-4">
+
+                        <h3 class="card-title">
+                            Share a Recipe
+                        </h3>
+
+                        <p class="card-text">
+                            Add a new recipe to your collection.
+                        </p>
+
+                        <a href="create_recipe.html"
+                           class="btn btn-warning">
+                            Add Recipe
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    
+<!-- Search, Filter, and Sort -->
+<section class="mb-5">
+
+    <h2 class="mb-3">Find a Recipe</h2>
+
+    <!-- Search Bar -->
+    <div class="input-group mb-3">
+        <input type="search"
+               class="form-control"
+               id="recipeSearch"
+               placeholder="Search recipes...">
+
+        <button class="btn btn-warning"
+                type="button"
+                id="searchButton">
+            Search
+        </button>
+    </div>
+
+    <!-- Filter and Sort -->
+    <div class="row g-3">
+
+        <div class="col-md-6">
+            <select class="form-select" id="recipeFilter">
+                <option value="all">All Categories</option>
+                <option value="breakfast">Breakfast</option>
+                <option value="lunch">Lunch</option>
+                <option value="dinner">Dinner</option>
+                <option value="dessert">Dessert</option>
+            </select>
+        </div>
+
+        <div class="col-md-6">
+            <select class="form-select" id="recipeSort">
+                <option value="newest">Newest First</option>
+                <option value="oldest">Oldest First</option>
+                <option value="az">Name: A-Z</option>
+                <option value="za">Name: Z-A</option>
+            </select>
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
 
   <div id="site-nav"></div>
 
   <script type="module" src="./src/main.js"></script>
+  <script type="module" src="/src/recipeSearch.js"></script>
+
 </body>
 </html>
