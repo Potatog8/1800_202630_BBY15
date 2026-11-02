@@ -1,9 +1,10 @@
-import { auth } from "./firebaseConfig.js";
+import { auth, db } from "./firebaseConfig.js";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
+import { doc, setDoc, serverTimestamp } from "firebase/firestore";
 
 const form = document.getElementById("auth-form");
 const errorBox = document.getElementById("error");
@@ -29,7 +30,9 @@ function setMode(newMode) {
   nameInput.required = isSignup;
 
   tabLogin.className = isSignup ? "btn btn-outline-primary" : "btn btn-primary";
-  tabSignup.className = isSignup ? "btn btn-primary" : "btn btn-outline-primary";
+  tabSignup.className = isSignup
+    ? "btn btn-primary"
+    : "btn btn-outline-primary";
 
   errorBox.classList.add("d-none");
   history.replaceState(null, "", isSignup ? "#signup" : "#login");
@@ -66,13 +69,21 @@ form.addEventListener("submit", async (e) => {
 
   try {
     if (mode === "signup") {
+      const name = nameInput.value.trim();
       const cred = await createUserWithEmailAndPassword(auth, email, password);
-      await updateProfile(cred.user, { displayName: nameInput.value.trim() });
+      await updateProfile(cred.user, { displayName: name });
+
+      await setDoc(doc(db, "users", cred.user.uid), {
+        name,
+        email,
+        createdAt: serverTimestamp(),
+      });
     } else {
       await signInWithEmailAndPassword(auth, email, password);
     }
     window.location.href = "home.html";
   } catch (err) {
+    console.error(err);
     errorBox.textContent = friendlyError(err.code);
     errorBox.classList.remove("d-none");
   }
