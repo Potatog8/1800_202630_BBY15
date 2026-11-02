@@ -5,11 +5,15 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import { renderHeader } from "./components/header.js";
 import { renderBottomNav } from "./components/bottomNav.js";
 
-// If you have custom global styles, import them as well:
-// import '../styles/style.css';
+const excludedPages = ['/', '/loginSignup.html'];
+const currentPath = window.location.pathname;
 
-renderHeader();
-renderBottomNav();
+if (!excludedPages.includes(currentPath)) {
+  renderHeader();
+  renderBottomNav();
+}
+
+
 
 const authBtn = document.getElementById("auth-btn");
 
@@ -32,8 +36,3 @@ onAuthStateChanged(auth, (user) => {
 
   authBtn.classList.remove("invisible");
 });
-
-function sayHello() {
-
-}
-// document.addEventListener('DOMContentLoaded', sayHello);
