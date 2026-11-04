@@ -1,7 +1,7 @@
 const links = [
   { label: "Home", href: "home.html" },
   { label: "Favorites", href: "favorites.html" },
-  { label: "Collections", href: "#" },
+  { label: "Collections", href: "books.html" },
   { label: "Profile", href: "#" },
 ];
 
