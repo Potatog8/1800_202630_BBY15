@@ -4,6 +4,8 @@ const links = [
   { label: "Collections", href: "books.html" },
 
   { label: "Favorites", href: "favorites.html" },
+
+  { label: "Collections", href: "books.html" },
   
   { label: "Profile", href: "#" },
 ];
