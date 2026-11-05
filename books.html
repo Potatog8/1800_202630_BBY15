@@ -1,58 +1,53 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Explore Collections | Heirloom Recipes</title>
+    <title>Books | Heirloom Recipes</title>
 
     <!-- Bootstrap CSS -->
 
-
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="styles/style.css">
-</head>
+    <link rel="stylesheet" href="styles/style.css" />
+  </head>
 
-<body>
-
+  <body>
     <div id="site-header"></div>
 
     <main class="container mt-5 pb-5 mb-5">
+      <!-- Page Heading -->
+      <section class="mb-4">
+        <h1 class="fw-bold">Books</h1>
 
-        <!-- Page Heading -->
-        <section class="mb-4">
-            <h1 class="fw-bold">Collections</h1>
+        <p class="text-secondary">Discover books and family favourites.</p>
+      </section>
 
-            <p class="text-secondary">
-                Discover collections and family favourites.
-            </p>
-        </section>
+      <!-- books Results -->
 
-        <!-- collections Results -->
-        
-<section>
-    <h2 class="mb-4"></h2>
+      <section>
+        <h2 class="mb-4"></h2>
 
-    <div class="row g-4" id="recipeResults">
-        <!-- collections will appear here when added -->
-    </div>
+        <!-- Create Book Button -->
+        <div class="mb-4">
+          <a href="create_book.html" class="btn btn-warning">
+            Create New Book
+          </a>
+        </div>
 
-    <!-- Empty State -->
-    <div id="noResults" class="text-center py-5">
-        <h4>No collections yet!</h4>
-        <p class="text-secondary">
+        <!-- Book Cards -->
+        <div class="row g-4" id="recipeResults">
+          <!-- Books will appear here -->
+        </div>
+
+        <!-- Empty State -->
+        <div id="noResults" class="text-center py-5">
+          <h4>No Books yet!</h4>
+          <p class="text-secondary">
             Start preserving your family's favourite recipes.
-        </p>
-
-        <a href="create_recipe.html" class="btn btn-warning">
-            Add Your First Recipe to Collection
-        </a>
-    </div>
-</section>
-
-
+          </p>
+        </div>
+      </section>
     </main>
 
     <div id="site-nav"></div>
@@ -61,5 +56,8 @@
 
     <!-- Recipe Results JavaScript -->
     <script type="module" src="/src/main.js"></script>
-</body>
+
+    <!-- Books Javascript-->
+    <script type="module" src="/src/books.js"></script>
+  </body>
 </html>
