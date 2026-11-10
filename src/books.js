@@ -3,7 +3,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { collection, getDocs } from "firebase/firestore";
 
 async function loadBooks(currentUser) {
-  const booksRef = collection(db, "users", currentUser.uid, "createdBooks");
+  const booksRef = collection(db, "users", currentUser.uid, "myBooks");
   const booksContainer = document.getElementById("recipeResults");
   const booksSnapshot = await getDocs(booksRef);
 
@@ -13,27 +13,32 @@ async function loadBooks(currentUser) {
   }
 
   booksSnapshot.docs.forEach((book) => {
-    console.log(book.data());
+    const data = book.data();
 
     const column = document.createElement("div");
     column.className = "col-12 col-md-6 col-lg-4";
 
     const bookTitle = document.createElement("h5");
-    bookTitle.textContent = book.data().name;
+    bookTitle.textContent = data.name;
     bookTitle.className = "card-title";
 
-    const card = document.createElement("div");
-    card.className = "card";
+    const bookDescription = document.createElement("p");
+    bookDescription.textContent = data.description;
+    bookDescription.className = "card-text";
+
+    const joinCode = document.createElement("p");
+    joinCode.textContent = `Join code: ${data.joinCode}`;
+    joinCode.className = "card-subtitle text-muted small";
 
     const cardBody = document.createElement("div");
     cardBody.className = "card-body";
     cardBody.appendChild(bookTitle);
-    card.appendChild(cardBody);
-
-    const bookDescription = document.createElement("p");
-    bookDescription.textContent = book.data().description;
-    bookDescription.className = "card-text";
     cardBody.appendChild(bookDescription);
+    cardBody.appendChild(joinCode);
+
+    const card = document.createElement("div");
+    card.className = "card";
+    card.appendChild(cardBody);
 
     column.appendChild(card);
     booksContainer.appendChild(column);
