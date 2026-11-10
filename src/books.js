@@ -18,13 +18,19 @@ async function loadBooks(currentUser) {
     const column = document.createElement("div");
     column.className = "col-12 col-md-6 col-lg-4";
 
+    // Link covers the whole card via Bootstrap's stretched-link
+    const bookLink = document.createElement("a");
+    bookLink.href = `book.html?id=${encodeURIComponent(book.id)}`;
+    bookLink.className = "stretched-link text-decoration-none text-reset";
+    bookLink.textContent = data.name;
+
     const bookTitle = document.createElement("h5");
-    bookTitle.textContent = data.name;
     bookTitle.className = "card-title";
+    bookTitle.appendChild(bookLink);
 
     const bookDescription = document.createElement("p");
     bookDescription.textContent = data.description;
-    bookDescription.className = "card-text";
+    bookDescription.className = "card-text text-truncate";
 
     const joinCode = document.createElement("p");
     joinCode.textContent = `Join code: ${data.joinCode}`;
@@ -37,7 +43,7 @@ async function loadBooks(currentUser) {
     cardBody.appendChild(joinCode);
 
     const card = document.createElement("div");
-    card.className = "card";
+    card.className = "card book-card";
     card.appendChild(cardBody);
 
     column.appendChild(card);
