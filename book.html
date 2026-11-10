@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Book | Heirloom Recipes</title>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles/style.css" />
+  </head>
+
+  <body>
+    <div id="site-header"></div>
+
+    <main class="container mt-5 pb-5 mb-5">
+      <a href="books.html" class="text-decoration-none">&larr; Back to Books</a>
+
+      <!-- Book details -->
+      <section id="book-details" class="mt-3 mb-4 d-none">
+        <h1 id="book-title" class="fw-bold text-break"></h1>
+        <p id="book-description" class="text-secondary text-break"></p>
+
+        <a href="create_recipe.html" id="add-recipe-btn" class="btn btn-warning">
+          Add Recipe
+        </a>
+
+        <!-- Recipes in this book -->
+        <div class="mt-5">
+          <h2 class="h4 mb-3">Recipes</h2>
+
+          <div class="row g-4" id="recipe-list">
+            <!-- Recipes will appear here -->
+          </div>
+
+          <div id="no-recipes" class="text-center py-5 d-none">
+            <h4>No recipes yet!</h4>
+            <p class="text-secondary">Add the first recipe to this book.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Not found state -->
+      <div id="book-not-found" class="text-center py-5 d-none">
+        <h4>Book not found</h4>
+        <p class="text-secondary">
+          This book doesn't exist or isn't in your books.
+        </p>
+      </div>
+    </main>
+
+    <div id="site-nav"></div>
+
+    <script type="module" src="/src/main.js"></script>
+    <script type="module" src="/src/book.js"></script>
+  </body>
+</html>
