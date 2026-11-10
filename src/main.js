@@ -5,15 +5,17 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import { renderHeader } from "./components/header.js";
 import { renderBottomNav } from "./components/bottomNav.js";
 
-const excludedPages = ['/', '/loginSignup.html'];
+const hideHeaderPages = ['/loginSignup.html'];
+const hideBottomNavPages = ['/', '/loginSignup.html'];
 const currentPath = window.location.pathname;
 
-if (!excludedPages.includes(currentPath)) {
+if (!hideHeaderPages.includes(currentPath)) {
   renderHeader();
-  renderBottomNav();
 }
 
-
+if (!hideBottomNavPages.includes(currentPath)) {
+  renderBottomNav();
+}
 
 const authBtn = document.getElementById("auth-btn");
 
