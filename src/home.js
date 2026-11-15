@@ -1,6 +1,7 @@
 import { auth, db } from "./firebaseConfig.js";
 import { onAuthStateChanged } from "firebase/auth";
 import { collection, getDocs, limit, orderBy, query } from "firebase/firestore";
+import { createFavoriteButton, getFavoriteIds } from "./favoriteButton.js";
 
 const RECENT_COUNT = 3;
 
@@ -102,7 +103,7 @@ function renderBooks(books) {
   });
 }
 
-function renderRecipes(recipes) {
+function renderRecipes(recipes, favoriteIds) {
   const container = document.getElementById("recent-recipes");
   const noRecipes = document.getElementById("no-recent-recipes");
 
@@ -137,9 +138,16 @@ function renderRecipes(recipes) {
     author.className = "card-subtitle text-muted small";
     author.textContent = `Added by ${recipe.authorName ?? "Unknown"}`;
 
+    const header = document.createElement("div");
+    header.className = "d-flex justify-content-between align-items-start gap-2";
+    header.appendChild(title);
+    header.appendChild(
+      createFavoriteButton(recipe, favoriteIds.has(recipe.id))
+    );
+
     const cardBody = document.createElement("div");
     cardBody.className = "card-body";
-    cardBody.appendChild(title);
+    cardBody.appendChild(header);
     cardBody.appendChild(description);
     cardBody.appendChild(bookLine);
     cardBody.appendChild(author);
@@ -162,7 +170,12 @@ onAuthStateChanged(auth, async (user) => {
     );
 
     renderBooks(getRecentBooks(booksSnap.docs));
-    renderRecipes(await getRecentRecipes(booksSnap.docs));
+
+    const [recipes, favoriteIds] = await Promise.all([
+      getRecentRecipes(booksSnap.docs),
+      getFavoriteIds(user),
+    ]);
+    renderRecipes(recipes, favoriteIds);
   } catch (err) {
     console.error("Error loading home page:", err);
     document.getElementById("no-recent-books").classList.remove("d-none");

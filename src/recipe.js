@@ -1,6 +1,7 @@
 import { auth, db } from "./firebaseConfig.js";
 import { onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
+import { createFavoriteButton, isFavorited } from "./favoriteButton.js";
 
 const params = new URLSearchParams(window.location.search);
 const bookId = params.get("bookId");
@@ -14,7 +15,7 @@ if (bookId) {
     `book.html?id=${encodeURIComponent(bookId)}`;
 }
 
-async function loadRecipe() {
+async function loadRecipe(user) {
   if (!bookId || !recipeId) {
     notFound.classList.remove("d-none");
     return;
@@ -47,6 +48,19 @@ async function loadRecipe() {
       `Added by ${recipe.authorName ?? "Unknown"}` +
       (addedOn ? ` on ${addedOn}` : "");
 
+    document.getElementById("favorite-btn-container").replaceChildren(
+      createFavoriteButton(
+        {
+          id: recipeId,
+          bookId,
+          name: recipe.name,
+          description: recipe.description,
+          authorName: recipe.authorName,
+        },
+        await isFavorited(user, recipeId)
+      )
+    );
+
     details.classList.remove("d-none");
   } catch (err) {
     // Also covers permission-denied when the user isn't a member of the book
@@ -57,6 +71,6 @@ async function loadRecipe() {
 
 onAuthStateChanged(auth, (user) => {
   if (user) {
-    loadRecipe(); // main.js redirects logged-out users
+    loadRecipe(user); // main.js redirects logged-out users
   }
 });

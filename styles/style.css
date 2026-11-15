@@ -74,3 +74,20 @@ html.auth-pending body {
 .recipe-text {
   white-space: pre-line;
 }
+
+.favorite-btn {
+  position: relative;
+  z-index: 2; /* sits above the card's stretched-link so it can be clicked */
+  flex-shrink: 0;
+  padding: 0;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.favorite-btn img {
+  display: block;
+  width: 1.75rem;
+  height: 1.75rem;
+  object-fit: contain;
+}

@@ -10,20 +10,24 @@ import {
   orderBy,
   serverTimestamp,
 } from "firebase/firestore";
+import { createFavoriteButton, getFavoriteIds } from "./favoriteButton.js";
 
 const bookId = new URLSearchParams(window.location.search).get("id");
 
-async function loadRecipes() {
+async function loadRecipes(user) {
   const list = document.getElementById("recipe-list");
   const noRecipes = document.getElementById("no-recipes");
 
   try {
-    const recipesSnap = await getDocs(
-      query(
-        collection(db, "allBooks", bookId, "recipes"),
-        orderBy("createdAt", "desc"),
+    const [recipesSnap, favoriteIds] = await Promise.all([
+      getDocs(
+        query(
+          collection(db, "allBooks", bookId, "recipes"),
+          orderBy("createdAt", "desc")
+        )
       ),
-    );
+      getFavoriteIds(user),
+    ]);
 
     if (recipesSnap.empty) {
       noRecipes.classList.remove("d-none");
@@ -47,6 +51,22 @@ async function loadRecipes() {
       title.className = "card-title text-break";
       title.appendChild(link);
 
+      const favoriteBtn = createFavoriteButton(
+        {
+          id: recipeDoc.id,
+          bookId,
+          name: recipe.name,
+          description: recipe.description,
+          authorName: recipe.authorName,
+        },
+        favoriteIds.has(recipeDoc.id)
+      );
+
+      const header = document.createElement("div");
+      header.className = "d-flex justify-content-between align-items-start gap-2";
+      header.appendChild(title);
+      header.appendChild(favoriteBtn);
+
       const description = document.createElement("p");
       description.className = "card-text text-truncate";
       description.textContent = recipe.description;
@@ -57,7 +77,7 @@ async function loadRecipes() {
 
       const cardBody = document.createElement("div");
       cardBody.className = "card-body";
-      cardBody.appendChild(title);
+      cardBody.appendChild(header);
       cardBody.appendChild(description);
       cardBody.appendChild(author);
 
@@ -165,7 +185,7 @@ async function loadBook(user) {
       `create_recipe.html?bookId=${encodeURIComponent(bookId)}`;
 
     details.classList.remove("d-none");
-    loadRecipes();
+    loadRecipes(user);
   } catch (err) {
     console.error("Error loading book:", err);
     notFound.classList.remove("d-none");
