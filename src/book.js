@@ -3,10 +3,12 @@ import { onAuthStateChanged } from "firebase/auth";
 import {
   doc,
   getDoc,
+  updateDoc,
   collection,
   getDocs,
   query,
   orderBy,
+  serverTimestamp,
 } from "firebase/firestore";
 
 const bookId = new URLSearchParams(window.location.search).get("id");
@@ -148,6 +150,11 @@ async function loadBook(user) {
       notFound.classList.remove("d-none");
       return;
     }
+
+    // Remember when this book was last opened (used for "recently opened" on home)
+    updateDoc(doc(db, "users", user.uid, "myBooks", bookId), {
+      lastAccessedAt: serverTimestamp(),
+    }).catch((err) => console.error("Error updating last accessed:", err));
 
     const book = bookSnap.data();
     document.title = `${book.name} | Heirloom Recipes`;
