@@ -171,9 +171,7 @@ async function loadBook(user) {
   }
 
   try {
-    const bookSnap = await getDoc(
-      doc(db, "users", user.uid, "myBooks", bookId),
-    );
+    const bookSnap = await getDoc(doc(db, "users", user.uid, "myBooks", bookId));
 
     if (!bookSnap.exists()) {
       notFound.classList.remove("d-none");
@@ -189,6 +187,11 @@ async function loadBook(user) {
     document.title = `${book.name} | Heirloom Recipes`;
     document.getElementById("book-title").textContent = book.name;
     document.getElementById("book-description").textContent = book.description;
+
+    if (book.joinCode) {
+      document.getElementById("book-join-code").textContent = book.joinCode;
+      document.getElementById("join-code-line").classList.remove("d-none");
+    }
 
     document.getElementById("add-recipe-btn").href =
       `create_recipe.html?bookId=${encodeURIComponent(bookId)}`;
