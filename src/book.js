@@ -11,6 +11,7 @@ import {
   serverTimestamp,
 } from "firebase/firestore";
 import { createFavoriteButton, getFavoriteIds } from "./favoriteButton.js";
+import { createRecipeImage } from "./recipeImage.js";
 
 const bookId = new URLSearchParams(window.location.search).get("id");
 
@@ -42,6 +43,12 @@ async function loadRecipes(user) {
       const column = document.createElement("div");
       column.className = "col-12 col-md-6 col-lg-4";
 
+      const image = createRecipeImage(
+        recipe.imageData,
+        recipe.name,
+        "card-img-top"
+      );
+
       const link = document.createElement("a");
       link.href = `recipe.html?bookId=${encodeURIComponent(bookId)}&id=${encodeURIComponent(recipeDoc.id)}`;
       link.className = "stretched-link text-decoration-none text-reset";
@@ -58,6 +65,7 @@ async function loadRecipes(user) {
           name: recipe.name,
           description: recipe.description,
           authorName: recipe.authorName,
+          imageData: recipe.imageData,
         },
         favoriteIds.has(recipeDoc.id)
       );
@@ -83,6 +91,7 @@ async function loadRecipes(user) {
 
       const card = document.createElement("div");
       card.className = "card book-card";
+      card.appendChild(image);
       card.appendChild(cardBody);
 
       column.appendChild(card);

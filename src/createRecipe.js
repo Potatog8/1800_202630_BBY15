@@ -8,15 +8,41 @@ import {
   serverTimestamp,
 } from "firebase/firestore";
 import { getUsername } from "./joinBook.js";
+import { resizeImage } from "./recipeImage.js";
 
 const form = document.getElementById("recipe-form");
+const imageInput = document.getElementById("recipe-image");
+const imagePreview = document.getElementById("image-preview");
+const submitBtn = form?.querySelector('button[type="submit"]');
 const bookId = new URLSearchParams(window.location.search).get("bookId");
 let currentUser = null;
+let imageData = "";
 
 onAuthStateChanged(auth, (user) => {
   currentUser = user;
   if (!user) {
     window.location.href = "loginSignup.html#login";
+  }
+});
+
+imageInput?.addEventListener("change", async () => {
+  const file = imageInput.files[0];
+  imageData = "";
+  imagePreview.classList.add("d-none");
+  if (!file) return;
+
+  // Block saving until the image has finished processing
+  submitBtn.disabled = true;
+  try {
+    imageData = await resizeImage(file);
+    imagePreview.src = imageData;
+    imagePreview.classList.remove("d-none");
+  } catch (err) {
+    console.error("Error processing image:", err);
+    imageInput.value = "";
+    alert("Could not use that image. Please try a different one.");
+  } finally {
+    submitBtn.disabled = false;
   }
 });
 
@@ -30,6 +56,7 @@ form?.addEventListener("submit", async (e) => {
     origin: document.getElementById("origin").value.trim(),
     ingredients: document.getElementById("ingredients").value.trim(),
     instructions: document.getElementById("instructions").value.trim(),
+    imageData,
     authorId: currentUser.uid,
     authorName: getUsername(currentUser),
     createdAt: serverTimestamp(),

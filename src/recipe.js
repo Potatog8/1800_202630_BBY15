@@ -2,6 +2,7 @@ import { auth, db } from "./firebaseConfig.js";
 import { onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { createFavoriteButton, isFavorited } from "./favoriteButton.js";
+import { createRecipeImage } from "./recipeImage.js";
 
 const params = new URLSearchParams(window.location.search);
 const bookId = params.get("bookId");
@@ -23,7 +24,7 @@ async function loadRecipe(user) {
 
   try {
     const recipeSnap = await getDoc(
-      doc(db, "allBooks", bookId, "recipes", recipeId)
+      doc(db, "allBooks", bookId, "recipes", recipeId),
     );
 
     if (!recipeSnap.exists()) {
@@ -56,10 +57,17 @@ async function loadRecipe(user) {
           name: recipe.name,
           description: recipe.description,
           authorName: recipe.authorName,
+          imageData: recipe.imageData,
         },
-        await isFavorited(user, recipeId)
-      )
+        await isFavorited(user, recipeId),
+      ),
     );
+
+    document
+      .getElementById("recipe-image-container")
+      .replaceChildren(
+        createRecipeImage(recipe.imageData, recipe.name, "recipe-image-lg"),
+      );
 
     details.classList.remove("d-none");
   } catch (err) {

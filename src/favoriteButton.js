@@ -67,14 +67,13 @@ export function createFavoriteButton(recipe, isFavorite = false, onChange) {
 
     try {
       if (favorited) {
-        await deleteDoc(favoriteRef);
-      } else {
         await setDoc(favoriteRef, {
           recipeId: recipe.id,
           bookId: recipe.bookId,
           name: recipe.name,
           description: recipe.description ?? "",
           authorName: recipe.authorName ?? "Unknown",
+          imageData: recipe.imageData ?? "",
           favoritedAt: serverTimestamp(),
         });
       }

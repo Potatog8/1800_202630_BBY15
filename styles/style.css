@@ -91,3 +91,26 @@ html.auth-pending body {
   height: 1.75rem;
   object-fit: contain;
 }
+
+.recipe-image {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.recipe-image-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #d9d9d9;
+  color: #555;
+  font-size: 0.9rem;
+}
+
+/* Larger version for the top of the recipe page and the form preview */
+.recipe-image-lg {
+  max-width: 640px;
+  margin: 0 auto 1.5rem;
+  border-radius: 12px;
+}

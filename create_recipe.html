@@ -19,6 +19,13 @@
       <!-- Form -->
       <form id="recipe-form" class="px-4 px-md-5 pb-4">
         <div class="mb-3">
+          <label for="recipe-image" class="form-label">Recipe Image (optional)</label>
+          <input type="file" id="recipe-image" class="form-control" accept="image/*" />
+          <div class="form-text">Large photos are resized automatically.</div>
+          <img id="image-preview" class="recipe-image recipe-image-lg d-none mt-3" alt="Preview of the selected image" />
+        </div>
+        
+        <div class="mb-3">
           <label for="recipe-name" class="form-label">Recipe Name*</label>
           <input type="text" id="recipe-name" class="form-control bg-secondary-subtle border-0 rounded-0" placeholder="Enter recipe name" required />
         </div>

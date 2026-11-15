@@ -2,6 +2,7 @@ import { auth, db } from "./firebaseConfig.js";
 import { onAuthStateChanged } from "firebase/auth";
 import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import { createFavoriteButton } from "./favoriteButton.js";
+import { createRecipeImage } from "./recipeImage.js";
 
 const container = document.getElementById("favoriteRecipesContainer");
 const noFavorites = document.getElementById("no-favorites");
@@ -29,10 +30,17 @@ async function loadFavorites(user) {
         name: favorite.name,
         description: favorite.description,
         authorName: favorite.authorName,
+        imageData: favorite.imageData,
       };
 
       const column = document.createElement("div");
       column.className = "col-12 col-md-6 col-lg-4";
+
+      const image = createRecipeImage(
+        recipe.imageData,
+        recipe.name,
+        "card-img-top"
+      );
 
       const link = document.createElement("a");
       link.href = `recipe.html?bookId=${encodeURIComponent(recipe.bookId)}&id=${encodeURIComponent(recipe.id)}`;
@@ -72,6 +80,7 @@ async function loadFavorites(user) {
 
       const card = document.createElement("div");
       card.className = "card h-100 book-card";
+      card.appendChild(image);
       card.appendChild(cardBody);
 
       column.appendChild(card);
