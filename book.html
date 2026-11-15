@@ -21,9 +21,23 @@
         <h1 id="book-title" class="fw-bold text-break"></h1>
         <p id="book-description" class="text-secondary text-break"></p>
 
-        <a href="create_recipe.html" id="add-recipe-btn" class="btn btn-warning">
-          Add Recipe
-        </a>
+        <div class="d-flex gap-2">
+          <a
+            href="create_recipe.html"
+            id="add-recipe-btn"
+            class="btn btn-warning"
+          >
+            Add Recipe
+          </a>
+          <button
+            type="button"
+            class="btn btn-outline-secondary"
+            data-bs-toggle="modal"
+            data-bs-target="#membersModal"
+          >
+            View Members
+          </button>
+        </div>
 
         <!-- Recipes in this book -->
         <div class="mt-5">
@@ -49,6 +63,35 @@
       </div>
     </main>
 
+    <!-- Members modal -->
+    <div
+      class="modal fade"
+      id="membersModal"
+      tabindex="-1"
+      aria-labelledby="membersModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="membersModalLabel">Members</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <ul class="list-group" id="members-list"></ul>
+            <p
+              id="members-message"
+              class="text-secondary text-center mb-0 d-none"
+            ></p>
+          </div>
+        </div>
+      </div>
+    </div>
     <div id="site-nav"></div>
 
     <script type="module" src="/src/main.js"></script>

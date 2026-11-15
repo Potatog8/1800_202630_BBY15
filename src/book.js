@@ -19,8 +19,8 @@ async function loadRecipes() {
     const recipesSnap = await getDocs(
       query(
         collection(db, "allBooks", bookId, "recipes"),
-        orderBy("createdAt", "desc")
-      )
+        orderBy("createdAt", "desc"),
+      ),
     );
 
     if (recipesSnap.empty) {
@@ -72,6 +72,64 @@ async function loadRecipes() {
   }
 }
 
+async function loadMembers() {
+  const list = document.getElementById("members-list");
+  const message = document.getElementById("members-message");
+
+  list.replaceChildren();
+  message.classList.add("d-none");
+
+  if (!bookId) return;
+
+  try {
+    const membersSnap = await getDocs(
+      collection(db, "allBooks", bookId, "members"),
+    );
+
+    // Owner first, then by who joined earliest
+    const members = membersSnap.docs
+      .map((memberDoc) => memberDoc.data())
+      .sort((a, b) => {
+        if (a.role !== b.role) return a.role === "owner" ? -1 : 1;
+        return (a.joinedAt?.toMillis() ?? 0) - (b.joinedAt?.toMillis() ?? 0);
+      });
+
+    if (members.length === 0) {
+      message.textContent = "No members found.";
+      message.classList.remove("d-none");
+      return;
+    }
+
+    members.forEach((member) => {
+      const name = document.createElement("span");
+      name.className = "text-break";
+      name.textContent = member.username ?? "Unknown user";
+
+      const role = document.createElement("span");
+      const isOwner = member.role === "owner";
+      role.className = `badge ${isOwner ? "text-bg-warning" : "text-bg-secondary"}`;
+      role.textContent = isOwner ? "Owner" : "Member";
+
+      const item = document.createElement("li");
+      item.className =
+        "list-group-item d-flex justify-content-between align-items-center gap-2";
+      item.appendChild(name);
+      item.appendChild(role);
+
+      list.appendChild(item);
+    });
+  } catch (err) {
+    console.error("Error loading members:", err);
+    message.textContent = "Could not load members. Please try again.";
+    message.classList.remove("d-none");
+  }
+}
+
+// Reload the list every time the modal opens so it's always current
+document
+  .getElementById("membersModal")
+  .addEventListener("show.bs.modal", loadMembers);
+
 async function loadBook(user) {
   const details = document.getElementById("book-details");
   const notFound = document.getElementById("book-not-found");
@@ -82,7 +140,9 @@ async function loadBook(user) {
   }
 
   try {
-    const bookSnap = await getDoc(doc(db, "users", user.uid, "myBooks", bookId));
+    const bookSnap = await getDoc(
+      doc(db, "users", user.uid, "myBooks", bookId),
+    );
 
     if (!bookSnap.exists()) {
       notFound.classList.remove("d-none");
