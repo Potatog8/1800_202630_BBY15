@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Recipe | Heirloom Recipes</title>
+
+    <link rel="stylesheet" href="styles/style.css" />
+  </head>
+
+  <body>
+    <div id="site-header"></div>
+
+    <main class="container mt-5 pb-5 mb-5">
+      <a href="books.html" id="back-link" class="text-decoration-none">&larr; Back to Book</a>
+
+      <!-- Recipe details -->
+      <article id="recipe-details" class="mt-3 d-none">
+        <h1 id="recipe-title" class="fw-bold text-break"></h1>
+        <p id="recipe-meta" class="text-secondary small"></p>
+        <p id="recipe-description" class="text-break recipe-text"></p>
+
+        <section class="mt-4">
+          <h2 class="h4">Origin Story</h2>
+          <p id="recipe-origin" class="text-break recipe-text"></p>
+        </section>
+
+        <section class="mt-4">
+          <h2 class="h4">Ingredients</h2>
+          <p id="recipe-ingredients" class="text-break recipe-text"></p>
+        </section>
+
+        <section class="mt-4">
+          <h2 class="h4">Instructions</h2>
+          <p id="recipe-instructions" class="text-break recipe-text"></p>
+        </section>
+      </article>
+
+      <!-- Not found state -->
+      <div id="recipe-not-found" class="text-center py-5 d-none">
+        <h4>Recipe not found</h4>
+        <p class="text-secondary">
+          This recipe doesn't exist or isn't in one of your books.
+        </p>
+      </div>
+    </main>
+
+    <div id="site-nav"></div>
+
+    <script type="module" src="./src/main.js"></script>
+    <script type="module" src="./src/recipe.js"></script>
+  </body>
+</html>

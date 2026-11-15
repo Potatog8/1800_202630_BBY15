@@ -70,3 +70,7 @@ textarea {
 html.auth-pending body {
   visibility: hidden;
 }
+
+.recipe-text {
+  white-space: pre-line;
+}

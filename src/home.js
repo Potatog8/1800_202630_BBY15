@@ -55,9 +55,8 @@ function renderRecipes(recipes) {
     const column = document.createElement("div");
     column.className = "col-12 col-md-6 col-lg-4";
 
-    // Link covers the whole card (there's no single-recipe page yet, so it opens the book)
     const link = document.createElement("a");
-    link.href = `book.html?id=${encodeURIComponent(recipe.bookId)}`;
+    link.href = `recipe.html?bookId=${encodeURIComponent(recipe.bookId)}&id=${encodeURIComponent(recipe.id)}`;
     link.className = "stretched-link text-decoration-none text-reset";
     link.textContent = recipe.name;
 

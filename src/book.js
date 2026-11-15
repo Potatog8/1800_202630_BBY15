@@ -36,9 +36,14 @@ async function loadRecipes() {
       const column = document.createElement("div");
       column.className = "col-12 col-md-6 col-lg-4";
 
+      const link = document.createElement("a");
+      link.href = `recipe.html?bookId=${encodeURIComponent(bookId)}&id=${encodeURIComponent(recipeDoc.id)}`;
+      link.className = "stretched-link text-decoration-none text-reset";
+      link.textContent = recipe.name;
+
       const title = document.createElement("h5");
       title.className = "card-title text-break";
-      title.textContent = recipe.name;
+      title.appendChild(link);
 
       const description = document.createElement("p");
       description.className = "card-text text-truncate";
@@ -55,7 +60,7 @@ async function loadRecipes() {
       cardBody.appendChild(author);
 
       const card = document.createElement("div");
-      card.className = "card";
+      card.className = "card book-card";
       card.appendChild(cardBody);
 
       column.appendChild(card);
