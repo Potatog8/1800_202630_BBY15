@@ -7,7 +7,7 @@ import { renderBottomNav } from "./components/bottomNav.js";
 
 const publicPages = ['/', '/index.html', '/loginSignup.html'];
 const hideHeaderPages = ['/loginSignup.html'];
-const hideBottomNavPages = ['/', '/loginSignup.html'];
+const hideBottomNavPages = ['/', '/loginSignup.html', '/index.html'];
 const currentPath = window.location.pathname;
 const isPublicPage = publicPages.includes(currentPath);
 
@@ -30,7 +30,6 @@ let signingOut = false;
 onAuthStateChanged(auth, (user) => {
   if (!isPublicPage) {
     if (!user) {
-      // Don't hijack the redirect to index.html when the user clicked Sign Out
       if (!signingOut) {
         window.location.replace("loginSignup.html#login");
       }
