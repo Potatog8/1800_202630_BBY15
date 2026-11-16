@@ -67,6 +67,10 @@ export function createFavoriteButton(recipe, isFavorite = false, onChange) {
 
     try {
       if (favorited) {
+        // Currently favorited, so remove it
+        await deleteDoc(favoriteRef);
+      } else {
+        // Not favorited yet, so save it
         await setDoc(favoriteRef, {
           recipeId: recipe.id,
           bookId: recipe.bookId,
