@@ -21,10 +21,22 @@
         <h1 id="book-title" class="fw-bold text-break"></h1>
         <p id="book-description" class="text-secondary text-break"></p>
 
-        <p id="join-code-line" class="small text-secondary d-none">
-          Join code:
-          <span id="book-join-code" class="fw-bold text-body user-select-all"></span>
-        </p>
+        <div id="join-code-line" class="mb-3 d-none">
+          <div class="small text-secondary">Join code</div>
+          <div class="d-flex align-items-center gap-2">
+            <span
+              id="book-join-code"
+              class="join-code-display user-select-all"
+            ></span>
+            <button
+              type="button"
+              id="copy-join-code-btn"
+              class="btn btn-outline-secondary btn-sm"
+            >
+              Copy
+            </button>
+          </div>
+        </div>
 
         <div class="d-flex gap-2">
           <a

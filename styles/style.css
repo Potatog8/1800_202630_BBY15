@@ -130,3 +130,52 @@ html.auth-pending body {
   border-radius: 12px;
 }
 
+.join-code-display {
+  font-family: monospace;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 0.25rem;
+}
+
+@media (max-width: 850px) {
+  .logo_header .app-name {
+    display: none;
+  }
+}
+
+@media (max-width: 530px) {
+  /* Keep the logo and buttons on one row */
+  .logo_header .container-fluid {
+    flex-wrap: nowrap;
+  }
+
+  .logo_header .btn {
+    padding: 1rem 1rem;
+    font-size: 1.3rem;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 390px) {
+  .logo_header .navbar-brand img {
+    width: 85px;
+    height: 85px;
+  }
+
+  .logo_header .btn {
+    padding: 0.65rem 0.85rem;
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 340px) {
+  .logo_header .navbar-brand img {
+    width: 70px;
+    height: 70px;
+  }
+
+  .logo_header .btn {
+    padding: 0.35rem 0.7rem;
+    font-size: 0.95rem;
+  }
+}

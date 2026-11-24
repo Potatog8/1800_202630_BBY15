@@ -189,8 +189,23 @@ async function loadBook(user) {
     document.getElementById("book-description").textContent = book.description;
 
     if (book.joinCode) {
+      const copyBtn = document.getElementById("copy-join-code-btn");
+
       document.getElementById("book-join-code").textContent = book.joinCode;
       document.getElementById("join-code-line").classList.remove("d-none");
+
+      copyBtn.addEventListener("click", async () => {
+        try {
+          await navigator.clipboard.writeText(book.joinCode);
+          copyBtn.textContent = "Copied!";
+        } catch (err) {
+          console.error("Could not copy join code:", err);
+          copyBtn.textContent = "Copy failed";
+        }
+        setTimeout(() => {
+          copyBtn.textContent = "Copy";
+        }, 1500);
+      });
     }
 
     document.getElementById("add-recipe-btn").href =
