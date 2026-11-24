@@ -23,11 +23,21 @@ function showEmptyIfNeeded() {
   }
 }
 
+function updateCardWidths() {
+  const columns = Array.from(container.children);
+  const hasThreeOrMore = columns.length >= 3;
+
+  columns.forEach((column) => {
+    column.classList.toggle("col-lg-4", hasThreeOrMore);
+    column.classList.toggle("col-lg-6", !hasThreeOrMore);
+  });
+}
+
 // Current recipe data, DELETED if the recipe is gone, or null if it can't be loaded
 async function getLiveRecipe(favoriteId, favorite) {
   try {
     const recipeSnap = await getDoc(
-      doc(db, "allBooks", favorite.bookId, "recipes", favoriteId)
+      doc(db, "allBooks", favorite.bookId, "recipes", favoriteId),
     );
     return recipeSnap.exists() ? recipeSnap.data() : DELETED;
   } catch (err) {
@@ -41,14 +51,14 @@ async function loadFavorites(user) {
     const favoritesSnap = await getDocs(
       query(
         collection(db, "users", user.uid, "favorites"),
-        orderBy("favoritedAt", "desc")
-      )
+        orderBy("favoritedAt", "desc"),
+      ),
     );
 
     const liveRecipes = await Promise.all(
       favoritesSnap.docs.map((favoriteDoc) =>
-        getLiveRecipe(favoriteDoc.id, favoriteDoc.data())
-      )
+        getLiveRecipe(favoriteDoc.id, favoriteDoc.data()),
+      ),
     );
 
     favoritesSnap.docs.forEach((favoriteDoc, index) => {
@@ -58,7 +68,7 @@ async function loadFavorites(user) {
       // The recipe was deleted: skip it and tidy up this favorite
       if (live === DELETED) {
         deleteDoc(favoriteDoc.ref).catch((err) =>
-          console.error("Error removing deleted favorite:", err)
+          console.error("Error removing deleted favorite:", err),
         );
         return;
       }
@@ -73,12 +83,11 @@ async function loadFavorites(user) {
       };
 
       const column = document.createElement("div");
-      column.className = "col-12 col-md-6 col-lg-4";
-
+      column.className = "col-12 col-md-6";
       const image = createRecipeImage(
         recipe.imageData,
         recipe.name,
-        "card-img-top"
+        "card-img-top",
       );
 
       const link = document.createElement("a");
@@ -94,12 +103,14 @@ async function loadFavorites(user) {
       const favoriteBtn = createFavoriteButton(recipe, true, (isFavorite) => {
         if (!isFavorite) {
           column.remove();
+          updateCardWidths();
           showEmptyIfNeeded();
         }
       });
 
       const header = document.createElement("div");
-      header.className = "d-flex justify-content-between align-items-start gap-2";
+      header.className =
+        "d-flex justify-content-between align-items-start gap-2";
       header.appendChild(title);
       header.appendChild(favoriteBtn);
 
@@ -126,6 +137,7 @@ async function loadFavorites(user) {
       container.appendChild(column);
     });
 
+    updateCardWidths();
     showEmptyIfNeeded();
   } catch (err) {
     console.error("Error loading favorites:", err);

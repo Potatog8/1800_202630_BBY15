@@ -24,8 +24,8 @@ async function loadRecipes(user) {
       getDocs(
         query(
           collection(db, "allBooks", bookId, "recipes"),
-          orderBy("createdAt", "desc")
-        )
+          orderBy("createdAt", "desc"),
+        ),
       ),
       getFavoriteIds(user),
     ]);
@@ -41,12 +41,14 @@ async function loadRecipes(user) {
       const recipe = recipeDoc.data();
 
       const column = document.createElement("div");
-      column.className = "col-12 col-md-6 col-lg-4";
+
+      column.className =
+        recipesSnap.size >= 3 ? "col-12 col-md-6 col-lg-4" : "col-12 col-md-6";
 
       const image = createRecipeImage(
         recipe.imageData,
         recipe.name,
-        "card-img-top"
+        "card-img-top",
       );
 
       const link = document.createElement("a");
@@ -67,11 +69,12 @@ async function loadRecipes(user) {
           authorName: recipe.authorName,
           imageData: recipe.imageData,
         },
-        favoriteIds.has(recipeDoc.id)
+        favoriteIds.has(recipeDoc.id),
       );
 
       const header = document.createElement("div");
-      header.className = "d-flex justify-content-between align-items-start gap-2";
+      header.className =
+        "d-flex justify-content-between align-items-start gap-2";
       header.appendChild(title);
       header.appendChild(favoriteBtn);
 
@@ -90,7 +93,7 @@ async function loadRecipes(user) {
       cardBody.appendChild(author);
 
       const card = document.createElement("div");
-      card.className = "card book-card";
+      card.className = "card h-100 book-card";
       card.appendChild(image);
       card.appendChild(cardBody);
 
@@ -171,7 +174,9 @@ async function loadBook(user) {
   }
 
   try {
-    const bookSnap = await getDoc(doc(db, "users", user.uid, "myBooks", bookId));
+    const bookSnap = await getDoc(
+      doc(db, "users", user.uid, "myBooks", bookId),
+    );
 
     if (!bookSnap.exists()) {
       notFound.classList.remove("d-none");

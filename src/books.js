@@ -16,7 +16,9 @@ async function loadBooks(currentUser) {
     const data = book.data();
 
     const column = document.createElement("div");
-    column.className = "col-12 col-md-6 col-lg-4";
+
+    column.className =
+      booksSnapshot.size >= 3 ? "col-12 col-md-6 col-lg-4" : "col-12 col-md-6";
 
     // Link covers the whole card via Bootstrap's stretched-link
     const bookLink = document.createElement("a");
@@ -43,7 +45,7 @@ async function loadBooks(currentUser) {
     cardBody.appendChild(joinCode);
 
     const card = document.createElement("div");
-    card.className = "card book-card";
+    card.className = "card h-100 book-card";
     card.appendChild(cardBody);
 
     column.appendChild(card);
