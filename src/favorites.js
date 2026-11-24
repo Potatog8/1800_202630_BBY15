@@ -1,6 +1,13 @@
 import { auth, db } from "./firebaseConfig.js";
 import { onAuthStateChanged } from "firebase/auth";
-import { collection, getDocs, orderBy, query } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  orderBy,
+  query,
+} from "firebase/firestore";
 import { createFavoriteButton } from "./favoriteButton.js";
 import { createRecipeImage } from "./recipeImage.js";
 
@@ -13,6 +20,19 @@ function showEmptyIfNeeded() {
   }
 }
 
+// Current version of the recipe, or null if it can't be loaded
+async function getLiveRecipe(favoriteId, favorite) {
+  try {
+    const recipeSnap = await getDoc(
+      doc(db, "allBooks", favorite.bookId, "recipes", favoriteId)
+    );
+    return recipeSnap.exists() ? recipeSnap.data() : null;
+  } catch (err) {
+    console.error("Error loading favorite recipe:", err);
+    return null;
+  }
+}
+
 async function loadFavorites(user) {
   try {
     const favoritesSnap = await getDocs(
@@ -22,15 +42,23 @@ async function loadFavorites(user) {
       )
     );
 
-    favoritesSnap.docs.forEach((favoriteDoc) => {
-      const favorite = favoriteDoc.data();
+    const liveRecipes = await Promise.all(
+      favoritesSnap.docs.map((favoriteDoc) =>
+        getLiveRecipe(favoriteDoc.id, favoriteDoc.data())
+      )
+    );
+
+    favoritesSnap.docs.forEach((favoriteDoc, index) => {
+      const saved = favoriteDoc.data();
+      const live = liveRecipes[index];
+
       const recipe = {
         id: favoriteDoc.id,
-        bookId: favorite.bookId,
-        name: favorite.name,
-        description: favorite.description,
-        authorName: favorite.authorName,
-        imageData: favorite.imageData,
+        bookId: saved.bookId,
+        name: live?.name ?? saved.name,
+        description: live?.description ?? saved.description,
+        authorName: live?.authorName ?? saved.authorName,
+        imageData: live ? live.imageData : saved.imageData,
       };
 
       const column = document.createElement("div");

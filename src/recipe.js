@@ -24,7 +24,7 @@ async function loadRecipe(user) {
 
   try {
     const recipeSnap = await getDoc(
-      doc(db, "allBooks", bookId, "recipes", recipeId),
+      doc(db, "allBooks", bookId, "recipes", recipeId)
     );
 
     if (!recipeSnap.exists()) {
@@ -45,9 +45,24 @@ async function loadRecipe(user) {
       recipe.instructions;
 
     const addedOn = recipe.createdAt?.toDate().toLocaleDateString();
+    const editedOn = recipe.updatedAt?.toDate().toLocaleDateString();
     document.getElementById("recipe-meta").textContent =
       `Added by ${recipe.authorName ?? "Unknown"}` +
-      (addedOn ? ` on ${addedOn}` : "");
+      (addedOn ? ` on ${addedOn}` : "") +
+      (editedOn ? ` · Edited ${editedOn}` : "");
+
+    // Only the person who added the recipe can edit it
+    if (recipe.authorId === user.uid) {
+      const editBtn = document.getElementById("edit-recipe-btn");
+      editBtn.href = `create_recipe.html?bookId=${encodeURIComponent(bookId)}&id=${encodeURIComponent(recipeId)}`;
+      editBtn.classList.remove("d-none");
+    }
+
+    document
+      .getElementById("recipe-image-container")
+      .replaceChildren(
+        createRecipeImage(recipe.imageData, recipe.name, "recipe-image-lg")
+      );
 
     document.getElementById("favorite-btn-container").replaceChildren(
       createFavoriteButton(
@@ -59,15 +74,9 @@ async function loadRecipe(user) {
           authorName: recipe.authorName,
           imageData: recipe.imageData,
         },
-        await isFavorited(user, recipeId),
-      ),
+        await isFavorited(user, recipeId)
+      )
     );
-
-    document
-      .getElementById("recipe-image-container")
-      .replaceChildren(
-        createRecipeImage(recipe.imageData, recipe.name, "recipe-image-lg"),
-      );
 
     details.classList.remove("d-none");
   } catch (err) {
