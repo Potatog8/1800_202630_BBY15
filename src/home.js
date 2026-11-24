@@ -35,8 +35,8 @@ async function getRecentRecipes(bookDocs) {
           query(
             collection(db, "allBooks", bookDoc.id, "recipes"),
             orderBy("createdAt", "desc"),
-            limit(RECENT_COUNT)
-          )
+            limit(RECENT_COUNT),
+          ),
         );
 
         return recipesSnap.docs.map((recipeDoc) => ({
@@ -49,7 +49,7 @@ async function getRecentRecipes(bookDocs) {
         console.error(`Error loading recipes for book ${bookDoc.id}:`, err);
         return [];
       }
-    })
+    }),
   );
 
   return perBook
@@ -69,7 +69,8 @@ function renderBooks(books) {
 
   books.forEach((book) => {
     const column = document.createElement("div");
-    column.className = "col-12 col-md-6 col-lg-4";
+    column.className =
+      books.length === 3 ? "col-12 col-md-6 col-lg-4" : "col-12 col-md-6";
 
     // Link covers the whole card via Bootstrap's stretched-link
     const link = document.createElement("a");
@@ -115,12 +116,12 @@ function renderRecipes(recipes, favoriteIds) {
 
   recipes.forEach((recipe) => {
     const column = document.createElement("div");
-    column.className = "col-12 col-md-6 col-lg-4";
-
+    column.className =
+      recipes.length === 3 ? "col-12 col-md-6 col-lg-4" : "col-12 col-md-6";
     const image = createRecipeImage(
       recipe.imageData,
       recipe.name,
-      "card-img-top"
+      "card-img-top",
     );
 
     // Link covers the whole card via Bootstrap's stretched-link
@@ -149,7 +150,7 @@ function renderRecipes(recipes, favoriteIds) {
     header.className = "d-flex justify-content-between align-items-start gap-2";
     header.appendChild(title);
     header.appendChild(
-      createFavoriteButton(recipe, favoriteIds.has(recipe.id))
+      createFavoriteButton(recipe, favoriteIds.has(recipe.id)),
     );
 
     const cardBody = document.createElement("div");
@@ -174,7 +175,7 @@ onAuthStateChanged(auth, async (user) => {
 
   try {
     const booksSnap = await getDocs(
-      collection(db, "users", user.uid, "myBooks")
+      collection(db, "users", user.uid, "myBooks"),
     );
 
     renderBooks(getRecentBooks(booksSnap.docs));
