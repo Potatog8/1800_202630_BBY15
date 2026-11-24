@@ -2,7 +2,7 @@ const links = [
   { label: "Home", href: "home.html", icon: "home" },
   { label: "Books", href: "books.html", icon: "books" },
   { label: "Favorites", href: "favorites.html", icon: "favorites" },
-  { label: "Profile", href: "#", icon: "profile" },
+  { label: "Profile", href: "profile.html", icon: "profile" },
 ];
 
 export function renderBottomNav(targetId = "site-nav") {

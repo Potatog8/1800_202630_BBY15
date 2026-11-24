@@ -211,3 +211,41 @@ html.auth-pending body {
     white-space: nowrap;
   }
 }
+
+/* Recipe details text */
+#recipe-description,
+#recipe-origin,
+#recipe-ingredients,
+#recipe-instructions {
+    font-size: 20px;
+    line-height: 1.7;
+}
+
+#recipe-details h2 {
+    font-size: 26px;
+    font-weight: 600;
+}
+
+#recipe-title {
+    font-size: 38px;
+}
+
+
+/* Profile page */
+.profile-page .card-body {
+    font-size: 22px;
+    line-height: 1.6;
+}
+
+.profile-page .card-body h2 {
+    font-size: 28px;
+}
+
+.profile-page .card-body p {
+    margin-bottom: 16px;
+}
+
+.profile-page .btn {
+    font-size: 19px;
+    padding: 8px 14px;
+}

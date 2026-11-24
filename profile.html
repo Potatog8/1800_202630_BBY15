@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Heirloom Recipes - Profile</title>
+
+    <link rel="stylesheet" href="styles/style.css" />
+  </head>
+
+  <body>
+    <div id="site-header"></div>
+
+    <main class="container mt-5 mb-5 pb-5 profile-page">
+      <h1 class="h3 fw-bold mb-4">My Profile</h1>
+
+      <div class="card">
+        <div class="card-body p-4">
+          <h2 class="h5 mb-4">Account Information</h2>
+
+          <p>
+            <strong>Name:</strong>
+            <span id="profile-name"></span>
+          </p>
+
+          <p>
+            <strong>Email:</strong>
+            <span id="profile-email"></span>
+          </p>
+
+          <button
+            type="button"
+            id="edit-profile-btn"
+            class="btn btn-warning mt-3"
+          >
+            Edit Profile
+          </button>
+
+          <form id="edit-profile-form" class="d-none mt-4">
+            <div class="mb-3">
+              <label for="profile-name-input" class="form-label">
+                Display Name
+              </label>
+              <input
+                type="text"
+                id="profile-name-input"
+                class="form-control"
+                required
+              />
+            </div>
+
+            <button type="submit" class="btn btn-warning">Save Changes</button>
+
+            <button
+              type="button"
+              id="cancel-edit-btn"
+              class="btn btn-secondary ms-2"
+            >
+              Cancel
+            </button>
+          </form>
+        </div>
+      </div>
+    </main>
+
+    <div id="site-nav"></div>
+
+    <script type="module" src="./src/main.js"></script>
+    <script type="module" src="./src/profile.js"></script>
+  </body>
+</html>
