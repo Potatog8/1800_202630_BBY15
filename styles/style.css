@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap');
+
 .logo_header{
     background-color: orange;
     padding-left: 1rem;
@@ -108,9 +110,23 @@ html.auth-pending body {
   font-size: 0.9rem;
 }
 
+.app-name {
+    color: #5B2E15;
+    font-family: 'DM Serif Display', serif;
+    font-size: 35px;
+    margin-left: 10px;
+    padding: 20px;
+}
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
+}
+
 /* Larger version for the top of the recipe page and the form preview */
 .recipe-image-lg {
   max-width: 640px;
   margin: 0 auto 1.5rem;
   border-radius: 12px;
 }
+

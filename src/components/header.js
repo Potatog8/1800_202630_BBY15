@@ -14,13 +14,16 @@ export function renderHeader(targetId = "site-header") {
   target.innerHTML = `
     <nav class="navbar logo_header">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="home.html">
           <img
             src="images/Heirloom Recipes Logo.png"
             alt="Logo"
             width="100"
             height="100"
           />
+          <span class="app-name">
+          Heirloom Recipes
+        </span>
         </a>
         <div class="d-flex gap-2">
           ${joinBookButton}
