@@ -2,6 +2,7 @@ import { auth, db } from "./firebaseConfig.js";
 import { onAuthStateChanged } from "firebase/auth";
 import {
   collection,
+  deleteDoc,
   doc,
   getDoc,
   getDocs,
@@ -14,19 +15,21 @@ import { createRecipeImage } from "./recipeImage.js";
 const container = document.getElementById("favoriteRecipesContainer");
 const noFavorites = document.getElementById("no-favorites");
 
+const DELETED = "deleted";
+
 function showEmptyIfNeeded() {
   if (container.children.length === 0) {
     noFavorites.classList.remove("d-none");
   }
 }
 
-// Current version of the recipe, or null if it can't be loaded
+// Current recipe data, DELETED if the recipe is gone, or null if it can't be loaded
 async function getLiveRecipe(favoriteId, favorite) {
   try {
     const recipeSnap = await getDoc(
       doc(db, "allBooks", favorite.bookId, "recipes", favoriteId)
     );
-    return recipeSnap.exists() ? recipeSnap.data() : null;
+    return recipeSnap.exists() ? recipeSnap.data() : DELETED;
   } catch (err) {
     console.error("Error loading favorite recipe:", err);
     return null;
@@ -51,6 +54,14 @@ async function loadFavorites(user) {
     favoritesSnap.docs.forEach((favoriteDoc, index) => {
       const saved = favoriteDoc.data();
       const live = liveRecipes[index];
+
+      // The recipe was deleted: skip it and tidy up this favorite
+      if (live === DELETED) {
+        deleteDoc(favoriteDoc.ref).catch((err) =>
+          console.error("Error removing deleted favorite:", err)
+        );
+        return;
+      }
 
       const recipe = {
         id: favoriteDoc.id,

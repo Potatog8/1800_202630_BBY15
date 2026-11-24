@@ -1,6 +1,6 @@
 import { auth, db } from "./firebaseConfig.js";
 import { onAuthStateChanged } from "firebase/auth";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, writeBatch } from "firebase/firestore";
 import { createFavoriteButton, isFavorited } from "./favoriteButton.js";
 import { createRecipeImage } from "./recipeImage.js";
 
@@ -14,6 +14,30 @@ const notFound = document.getElementById("recipe-not-found");
 if (bookId) {
   document.getElementById("back-link").href =
     `book.html?id=${encodeURIComponent(bookId)}`;
+}
+
+function setupDelete(user) {
+  const deleteBtn = document.getElementById("delete-recipe-btn");
+
+  deleteBtn.addEventListener("click", async () => {
+    if (!confirm("Delete this recipe? This can't be undone.")) return;
+
+    deleteBtn.disabled = true;
+    try {
+      // Remove the recipe, your own copy of it, and your favorite of it
+      const batch = writeBatch(db);
+      batch.delete(doc(db, "allBooks", bookId, "recipes", recipeId));
+      batch.delete(doc(db, "users", user.uid, "createdRecipes", recipeId));
+      batch.delete(doc(db, "users", user.uid, "favorites", recipeId));
+      await batch.commit();
+
+      window.location.href = `book.html?id=${encodeURIComponent(bookId)}`;
+    } catch (err) {
+      console.error("Error deleting recipe:", err);
+      alert("Could not delete your recipe. Please try again.");
+      deleteBtn.disabled = false;
+    }
+  });
 }
 
 async function loadRecipe(user) {
@@ -51,11 +75,12 @@ async function loadRecipe(user) {
       (addedOn ? ` on ${addedOn}` : "") +
       (editedOn ? ` · Edited ${editedOn}` : "");
 
-    // Only the person who added the recipe can edit it
+    // Only the person who added the recipe can edit or delete it
     if (recipe.authorId === user.uid) {
-      const editBtn = document.getElementById("edit-recipe-btn");
-      editBtn.href = `create_recipe.html?bookId=${encodeURIComponent(bookId)}&id=${encodeURIComponent(recipeId)}`;
-      editBtn.classList.remove("d-none");
+      document.getElementById("edit-recipe-btn").href =
+        `create_recipe.html?bookId=${encodeURIComponent(bookId)}&id=${encodeURIComponent(recipeId)}`;
+      document.getElementById("recipe-actions").classList.remove("d-none");
+      setupDelete(user);
     }
 
     document
