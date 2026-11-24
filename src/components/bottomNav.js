@@ -1,11 +1,8 @@
 const links = [
-  { label: "Home", href: "home.html" },
-
-  { label: "Books", href: "books.html" },
-
-  { label: "Favorites", href: "favorites.html" },
-  
-  { label: "Profile", href: "#" },
+  { label: "Home", href: "home.html", icon: "home" },
+  { label: "Books", href: "books.html", icon: "books" },
+  { label: "Favorites", href: "favorites.html", icon: "favorites" },
+  { label: "Profile", href: "#", icon: "profile" },
 ];
 
 export function renderBottomNav(targetId = "site-nav") {
@@ -15,12 +12,18 @@ export function renderBottomNav(targetId = "site-nav") {
   const current = window.location.pathname.split("/").pop() || "index.html";
 
   const items = links
-    .map(
-      ({ label, href }) => `
+    .map(({ label, href, icon }) => {
+      const isActive = current === href;
+      const iconSrc = `images/${icon}-${isActive ? "orange" : "white"}.png`;
+
+      return `
         <li class="nav-item">
-          <a class="nav-link${current === href ? " active fw-bold" : ""}" href="${href}">${label}</a>
-        </li>`
-    )
+          <a class="nav-link bottom-nav-link${isActive ? " active fw-bold" : ""}" href="${href}">
+            <img src="${iconSrc}" alt="" class="bottom-nav-icon" />
+            <span>${label}</span>
+          </a>
+        </li>`;
+    })
     .join("");
 
   target.innerHTML = `

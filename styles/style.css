@@ -179,3 +179,35 @@ html.auth-pending body {
     font-size: 0.95rem;
   }
 }
+
+.navbar.fixed-bottom {
+  --bs-navbar-color: #fff;
+  --bs-navbar-hover-color: #fff;
+  --bs-navbar-active-color: #ffa500;
+}
+
+.bottom-nav-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+  font-size: 0.75rem;
+}
+
+.bottom-nav-icon {
+  width: 1.75rem;
+  height: 1.75rem;
+  object-fit: contain; /* the icons have different shapes, so fit each inside the same box */
+}
+
+@media (max-width: 460px) {
+  /* Hide the labels visually but keep them readable by screen readers */
+  .bottom-nav-link span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
+}
